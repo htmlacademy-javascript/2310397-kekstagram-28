@@ -7,7 +7,7 @@ const DESCRIPTIONS = [
   'Просто выложил',
 ];
 
-const MESSAGE = [
+const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -28,14 +28,14 @@ const NAMES = [
 const idGenerator = () => {
   let lastIdValue = 0;
 
-  return function () {
+  return () => {
     lastIdValue += 1;
     return lastIdValue;
   };
 };
 
 const generatePhotoId = idGenerator();
-const generatePhotoUrl = idGenerator();
+const generateCommentId = idGenerator();
 
 
 const getRandomNumberGenerator = (min, max) => {
@@ -46,41 +46,24 @@ const getRandomNumberGenerator = (min, max) => {
 
 const getRandomElement = (element) => element[getRandomNumberGenerator(0, element.length - 1)];
 
-// likes - берём  функцию getRandomNumberGenerator() как для 'description'
-
-// comments
-const generateRandomNumberComment = (min, max) => {
-  const previousValue = [];
-
-  return function () {
-    let currentValue = getRandomNumberGenerator(min, max);
-    while(previousValue.includes(currentValue)) {
-      currentValue = getRandomNumberGenerator(min, max);
-    }
-    previousValue.push(currentValue);
-    return currentValue;
-  };
-};
-
-const generateCommentId = generateRandomNumberComment(100, 1000);
-
 
 const comment = () => ({
   id: generateCommentId(),
   avatar: `img/avatar-${getRandomNumberGenerator(1, 6)}.svg`,
-  message: getRandomElement(MESSAGE),
+  message: getRandomElement(MESSAGES),
   name: getRandomElement(NAMES),
 });
 
-const commentArray = Array.from({length: 2}, comment);
+const getPhotoInfo = () => {
+  const id = generatePhotoId();
+  return {
+    id: id,
+    url: `photos/${id}.jpg`,
+    description: getRandomElement(DESCRIPTIONS),
+    likes: getRandomNumberGenerator(15, 200),
+    comments: Array.from({length: 2}, comment),
+  };
+};
 
 
-const getInfo = () => ({
-  idPhoto: generatePhotoId(),
-  url: `photos/${generatePhotoUrl()}.jpg`,
-  description: getRandomElement(DESCRIPTIONS),
-  likes: getRandomNumberGenerator(15, 200),
-  comments: commentArray
-});
-
-const photoArray = Array.from({length: 25}, getInfo);
+const photos = Array.from({length: 25}, getPhotoInfo);
