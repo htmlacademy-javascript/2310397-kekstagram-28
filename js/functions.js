@@ -9,21 +9,14 @@ const checkPalindrome = (string) => {
   for (let i = preparedString.length - 1; i >= 0; i--) {
     reverseString += preparedString.at(i);
   }
-  if (preparedString === reverseString) {
-    return true;
-  }
-
-  return false;
+  return preparedString === reverseString;
 };
 
 // Вторая функция, второй вариант (я немного погуглил)
 const checkString = (string) => {
   const preparedString = string.toLowerCase().replaceAll(' ', '');
   const reverseString = preparedString.split('').reverse().join('');
-  if(preparedString === reverseString) {
-    return true;
-  }
-  return false;
+  return preparedString === reverseString;
 };
 
 // Третья функция (для дополнительного задания не нашёл решения).
