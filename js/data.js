@@ -56,6 +56,6 @@ const getPhoto = () => {
 };
 
 
-const getPhotos = () => Array.from({length: 25}, getPhoto);
+// const getPhotos = Array.from({length: 25}, getPhoto);
 
-export {getPhotos};
+export {getPhoto};
