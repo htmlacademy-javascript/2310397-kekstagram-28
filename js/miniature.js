@@ -1,8 +1,7 @@
-import {getPhoto} from './data.js';
+import {photos} from './main.js';
 const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content;
 
-const photos = Array.from({length: 25}, getPhoto);
 const photoListFragment = document.createDocumentFragment();
 
 photos.forEach(({url, likes, comments}) => {
