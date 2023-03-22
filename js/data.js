@@ -1,7 +1,7 @@
 // Модуль,в котором мы создаём данные для выолнения функции по созданию описаний для фотографий.
 import {idGenerator, getRandomNumberGenerator} from './util.js';
 
-const COMMENT_COUNT = 2;
+const COMMENT_COUNT = 15;
 
 const DESCRIPTIONS = [
   'Новое фото',
