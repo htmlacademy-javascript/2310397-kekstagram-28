@@ -1,5 +1,5 @@
 const picturesContainer = document.querySelector('.pictures');
-const pictureTemplate = document.querySelector('#picture').content;
+const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
 
 const renderMiniatures = (photos) => {
@@ -11,7 +11,7 @@ const renderMiniatures = (photos) => {
     photoElement.querySelector('.picture__img').src = url;
     photoElement.querySelector('.picture__likes').textContent = likes;
     photoElement.querySelector('.picture__comments').textContent = comments.length;
-    photoElement.querySelector('.picture__img').dataset.miniaturesId = id;
+    photoElement.dataset.miniaturesId = id;
     photoListFragment.appendChild(photoElement);
   });
   picturesContainer.appendChild(photoListFragment);
