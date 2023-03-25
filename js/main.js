@@ -6,4 +6,4 @@ const photos = Array.from({length: 25}, getPhoto);
 
 renderMiniatures(photos);
 
-renderBigPicture();
+renderBigPicture(photos);
