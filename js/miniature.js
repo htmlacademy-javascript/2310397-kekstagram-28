@@ -1,4 +1,4 @@
-import {renderBigPicture} from './big-picture-rendering.js';
+import { renderBigPicture } from './big-picture-rendering.js';
 
 const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -7,16 +7,19 @@ const pictureTemplate = document.querySelector('#picture').content.querySelector
 const renderMiniatures = (photos) => {
   const photoListFragment = document.createDocumentFragment();
 
-  photos.forEach(({url, likes, comments, id}) => {
+  photos.forEach((picture) => {
     const photoElement = pictureTemplate.cloneNode(true);
 
-    photoElement.querySelector('.picture__img').src = url;
-    photoElement.querySelector('.picture__likes').textContent = likes;
-    photoElement.querySelector('.picture__comments').textContent = comments.length;
-    photoElement.dataset.miniaturesId = id;
+    photoElement.querySelector('.picture__img').src = picture.url;
+    photoElement.querySelector('.picture__likes').textContent = picture.likes;
+    photoElement.querySelector('.picture__comments').textContent = picture.comments.length;
+    photoElement.addEventListener('click', () => {
+      renderBigPicture(picture);
+    });
+
     photoListFragment.appendChild(photoElement);
   });
-  renderBigPicture(photos);
+
   picturesContainer.appendChild(photoListFragment);
 };
 

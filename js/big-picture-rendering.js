@@ -2,7 +2,6 @@ import { isEscapeKey } from './util.js';
 import { renderComments } from './render-comments.js';
 
 const bigPhoto = document.querySelector('.big-picture');
-const photoContainer = document.querySelector('.pictures');
 
 const bigPictureImage = bigPhoto.querySelector('.big-picture__img');
 const likesCount = bigPhoto.querySelector('.likes-count');
@@ -44,24 +43,14 @@ const createBigPhotoDescription = (photo) => {
 
 
 const renderBigPicture = (photos) => {
-  photoContainer.addEventListener('click', (evt) => {
-    const currentTarget = evt.target.closest('.picture');
-    if (currentTarget) {
-      bigPhoto.classList.remove('hidden');
-      // Связывание элемента массива с данными фото с выбранной миниатюрой через дата-атрибут
-      const currentPhoto = photos.find((item) =>
-        item.id === Number(currentTarget.dataset.miniaturesId));
+  bigPhoto.classList.remove('hidden');
+  createBigPhotoDescription(photos);
 
-      // Вызов функции добавления данных большому фото
-      createBigPhotoDescription(currentPhoto);
+  currentCommentsCount.classList.add('hidden');
+  commentsLoader.classList.add('hidden');
+  document.querySelector('body').classList.add('modal-open');
 
-      currentCommentsCount.classList.add('hidden');
-      commentsLoader.classList.add('hidden');
-      document.querySelector('body').classList.add('modal-open');
-
-      bigPhotoCancel.addEventListener('click', onCrossClick);
-    }
-  });
+  bigPhotoCancel.addEventListener('click', onCrossClick);
 };
 
 export {renderBigPicture};
