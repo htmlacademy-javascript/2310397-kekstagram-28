@@ -48,7 +48,7 @@ const renderBigPicture = (photos) => {
     const currentTarget = evt.target.closest('.picture');
     if (currentTarget) {
       bigPhoto.classList.remove('hidden');
-      // Связывание элемента массива с данными о фото с выбранной миниатюрой через дата-атрибут
+      // Связывание элемента массива с данными фото с выбранной миниатюрой через дата-атрибут
       const currentPhoto = photos.find((item) =>
         item.id === Number(currentTarget.dataset.miniaturesId));
 

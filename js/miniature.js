@@ -1,3 +1,5 @@
+import {renderBigPicture} from './big-picture-rendering.js';
+
 const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
@@ -14,6 +16,7 @@ const renderMiniatures = (photos) => {
     photoElement.dataset.miniaturesId = id;
     photoListFragment.appendChild(photoElement);
   });
+  renderBigPicture(photos);
   picturesContainer.appendChild(photoListFragment);
 };
 
