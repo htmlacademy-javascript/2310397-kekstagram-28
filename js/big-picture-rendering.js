@@ -13,23 +13,23 @@ const commentsLoader = bigPhoto.querySelector('.comments-loader');
 const bigPhotoCancel = bigPhoto.querySelector('.big-picture__cancel');
 
 // Коллбэк для обработчика клика для закрытия полноэкранного показа изображения
-const onCrossClick = (evt) => {
+function onCrossClick(evt) {
   evt.preventDefault();
   bigPhoto.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   bigPhotoCancel.removeEventListener('click', onCrossClick);
-};
+  document.removeEventListener('keydown', onDocumentEscKeydown);
+}
 // Коллбэк для обработчика нажатия 'escape' для закрытия полноэкранного показа изображения
-const onDocumentEscKeydown = (evt) => {
+function onDocumentEscKeydown(evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     bigPhoto.classList.add('hidden');
     document.querySelector('body').classList.remove('modal-open');
     bigPhotoCancel.removeEventListener('click', onCrossClick);
+    document.removeEventListener('keydown', onDocumentEscKeydown);
   }
-};
-// Добавление документу обработчика нажатия 'escape' для закрытия полноэкранного показа изображения
-document.addEventListener('keydown', onDocumentEscKeydown);
+}
 
 // Функция добавления данных большому фото
 const createBigPhotoDescription = (photo) => {
@@ -51,6 +51,7 @@ const renderBigPicture = (photos) => {
   document.querySelector('body').classList.add('modal-open');
 
   bigPhotoCancel.addEventListener('click', onCrossClick);
+  document.addEventListener('keydown', onDocumentEscKeydown);
 };
 
 export {renderBigPicture};
