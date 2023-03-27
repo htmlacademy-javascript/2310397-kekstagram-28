@@ -15,4 +15,6 @@ const getRandomNumberGenerator = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-export {idGenerator, getRandomNumberGenerator};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {idGenerator, getRandomNumberGenerator, isEscapeKey};
