@@ -1,7 +1,7 @@
 // Модуль,в котором мы создаём данные для выолнения функции по созданию описаний для фотографий.
 import {idGenerator, getRandomNumberGenerator} from './util.js';
 
-const COMMENT_COUNT = 15;
+// const COMMENT_COUNT = 15;
 
 const DESCRIPTIONS = [
   'Новое фото',
@@ -53,7 +53,7 @@ const getPhoto = () => {
     url: `photos/${id}.jpg`,
     description: getRandomElement(DESCRIPTIONS),
     likes: getRandomNumberGenerator(15, 200),
-    comments: Array.from({length: COMMENT_COUNT}, comment),
+    comments: Array.from({length: getRandomNumberGenerator(0, 20)}, comment),
   };
 };
 
