@@ -7,14 +7,14 @@ const pictureTemplate = document.querySelector('#picture').content.querySelector
 const renderMiniatures = (photos) => {
   const photoListFragment = document.createDocumentFragment();
 
-  photos.forEach((picture) => {
+  photos.forEach((photo) => {
     const photoElement = pictureTemplate.cloneNode(true);
 
-    photoElement.querySelector('.picture__img').src = picture.url;
-    photoElement.querySelector('.picture__likes').textContent = picture.likes;
-    photoElement.querySelector('.picture__comments').textContent = picture.comments.length;
+    photoElement.querySelector('.picture__img').src = photo.url;
+    photoElement.querySelector('.picture__likes').textContent = photo.likes;
+    photoElement.querySelector('.picture__comments').textContent = photo.comments.length;
     photoElement.addEventListener('click', () => {
-      renderBigPicture(picture);
+      renderBigPicture(photo);
     });
 
     photoListFragment.appendChild(photoElement);

@@ -1,18 +1,18 @@
 const listComments = document.querySelector('.social__comments');
+const commentTemplate = listComments.querySelector('li');
 
-const renderComments = (comments) => {
+const createComments = (comments, currentCommentsShown) => {
   const commentListFragment = document.createDocumentFragment();
-  const commentTemplate = listComments.querySelector('li');
   listComments.innerHTML = '';
 
-  comments.forEach(({avatar, name, message}) => {
+  for (let i = 0; i < currentCommentsShown; i++) {
     const commentElement = commentTemplate.cloneNode(true);
-    commentElement.querySelector('.social__picture').src = avatar;
-    commentElement.querySelector('.social__picture').alt = name;
-    commentElement.querySelector('.social__text').textContent = message;
+    commentElement.querySelector('.social__picture').src = comments[i].avatar;
+    commentElement.querySelector('.social__picture').alt = comments[i].name;
+    commentElement.querySelector('.social__text').textContent = comments[i].message;
     commentListFragment.appendChild(commentElement);
-  });
+  }
   listComments.appendChild(commentListFragment);
 };
 
-export {renderComments};
+export {createComments};
