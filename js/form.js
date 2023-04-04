@@ -1,4 +1,6 @@
 import { isEscapeKey } from './util.js';
+import {addScaleActive, removeScaleActive} from './scale.js';
+import { addEffectActive, removeEffectActive } from './effects.js';
 
 const MAX_HASHTAG_COUNT = 5;
 const HASHTAG_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -26,21 +28,30 @@ const onBlurTextFields = () => {
   document.addEventListener('keydown', onDocumentEscKeydown);
 };
 
+const addFocusAndBlur = (target) => {
+  target.addEventListener('focus', onFocusTextFields);
+  target.addEventListener('blur', onBlurTextFields);
+};
+
+const removeFocusAndBlur = (target) => {
+  target.removeEventListener('focus', onFocusTextFields);
+  target.removeEventListener('blur', onBlurTextFields);
+};
+
+
 const addFocusAndBlurAction = () => {
-  hashTagField.addEventListener('focus', onFocusTextFields);
-  hashTagField.addEventListener('blur', onBlurTextFields);
-  descriptionField.addEventListener('focus', onFocusTextFields);
-  descriptionField.addEventListener('blur', onBlurTextFields);
+  addFocusAndBlur(descriptionField);
+  addFocusAndBlur(hashTagField);
 };
 
 const removeFocusAndBlurAction = () => {
-  hashTagField.removeEventListener('focus', onFocusTextFields);
-  hashTagField.removeEventListener('blur', onBlurTextFields);
-  descriptionField.removeEventListener('focus', onFocusTextFields);
-  descriptionField.removeEventListener('blur', onBlurTextFields);
+  removeFocusAndBlur(descriptionField);
+  removeFocusAndBlur(hashTagField);
 };
 
 const openLoadFileField = () => {
+  addScaleActive();
+  addEffectActive();
   overlay.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentEscKeydown);
@@ -49,6 +60,8 @@ const openLoadFileField = () => {
 };
 
 const hideLoadFileField = () => {
+  removeScaleActive();
+  removeEffectActive();
   form.reset();
   pristine.reset();
   overlay.classList.add('hidden');
@@ -81,13 +94,11 @@ const isValidHashtag = (tag) => HASHTAG_SYMBOLS.test(tag);
 
 const checkHashtagsCount = (hashtags) => hashtags.length <= MAX_HASHTAG_COUNT;
 
-const checkHashtagsUnique = (hashtags) => {
-  const lowerCaseTags = hashtags.map((hashtag) => hashtag.toLowerCase());
-  return lowerCaseTags.length === new Set(lowerCaseTags).size;
-};
+const checkHashtagsUnique = (hashtags) => hashtags.length === new Set(hashtags).size;
 
 const validateHashtags = (value) => {
   const hashtags = value.trim()
+    .toLowerCase()
     .split(' ')
     .filter((tag) => tag.trim().length);
   return checkHashtagsCount(hashtags) && checkHashtagsUnique(hashtags) && hashtags.every(isValidHashtag);
