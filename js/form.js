@@ -1,4 +1,6 @@
 import { isEscapeKey } from './util.js';
+import {addScaleActive, removeScaleActive} from './scale.js';
+import { addEffectActive, removeEffectActive } from './effects.js';
 
 const MAX_HASHTAG_COUNT = 5;
 const HASHTAG_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -48,6 +50,8 @@ const removeFocusAndBlurAction = () => {
 };
 
 const openLoadFileField = () => {
+  addScaleActive();
+  addEffectActive();
   overlay.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentEscKeydown);
@@ -56,6 +60,8 @@ const openLoadFileField = () => {
 };
 
 const hideLoadFileField = () => {
+  removeScaleActive();
+  removeEffectActive();
   form.reset();
   pristine.reset();
   overlay.classList.add('hidden');
