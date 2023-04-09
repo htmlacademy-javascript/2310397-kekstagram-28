@@ -9,7 +9,7 @@ const MAX_HASHTAG_COUNT = 5;
 const HASHTAG_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const ERROR_TEXT = 'Ошибка заполнения #хэштэгов';
 
-const body = document.querySelector('body');
+const body = document.body;
 const form = document.querySelector('.img-upload__form');
 const overlay = form.querySelector('.img-upload__overlay');
 const loadFileField = form.querySelector('#upload-file');

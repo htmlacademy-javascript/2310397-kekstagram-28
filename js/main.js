@@ -5,9 +5,9 @@ import './form.js';
 
 
 getData()
-  .catch((err) => {
-    showAlert(err.message);
-  })
   .then((photos) => {
     renderMiniatures(photos);
+  })
+  .catch((err) => {
+    showAlert(err.message);
   });

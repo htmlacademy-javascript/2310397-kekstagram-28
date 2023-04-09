@@ -1,7 +1,4 @@
-// import { isEscapeKey } from './util';
-// import { onFormEscKeydown } from './form';
-
-const body = document.querySelector('body');
+const body = document.body;
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 
