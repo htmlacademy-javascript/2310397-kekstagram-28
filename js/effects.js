@@ -57,6 +57,7 @@ const effectsElement = document.querySelector('.effects');
 const sliderElement = document.querySelector('.effect-level__slider');
 const sliderContainerElement = document.querySelector('.img-upload__effect-level');
 const imageElement = document.querySelector('.img-upload__preview img');
+const effectLevelElement = sliderContainerElement.querySelector('.effect-level__value');
 
 
 noUiSlider.create(sliderElement, {
@@ -114,6 +115,7 @@ const onSliderUpdate = () => {
   } else {
     imageElement.style.filter = `${chosenEffect.style}(${sliderValue}${chosenEffect.unit})`;
   }
+  effectLevelElement.value = sliderValue;
 };
 
 
