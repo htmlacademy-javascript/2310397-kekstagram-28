@@ -5,6 +5,7 @@ const pictureTemplate = document.querySelector('#picture').content.querySelector
 
 
 const renderMiniatures = (photos) => {
+  picturesContainer.querySelectorAll('.picture').forEach((element) => element.remove());
   const photoListFragment = document.createDocumentFragment();
 
   photos.forEach((photo) => {
