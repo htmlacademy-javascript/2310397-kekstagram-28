@@ -61,6 +61,9 @@ const renderBigPicture = (photos) => {
   // Блок отрисовки комментариев закончен
 
   // Функция закрытия попапа большого фото
+  let onCrossClick = () => {};
+  let onDocumentEscKeydown = () => {};
+
   const closeBigPhoto = () => {
     bigPhoto.classList.add('hidden');
     document.querySelector('body').classList.remove('modal-open');
@@ -68,18 +71,18 @@ const renderBigPicture = (photos) => {
     document.removeEventListener('keydown', onDocumentEscKeydown);
     commentsLoader.removeEventListener('click', onCommentsLouderButtonClick);
   };
-  // Коллбэк для обработчика клика для закрытия полноэкранного показа изображения
-  function onCrossClick(evt) {
+
+  onCrossClick = (evt) => {
     evt.preventDefault();
     closeBigPhoto();
-  }
-  // Коллбэк для обработчика нажатия 'escape' для закрытия полноэкранного показа изображения
-  function onDocumentEscKeydown(evt) {
+  };
+
+  onDocumentEscKeydown = (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
       closeBigPhoto();
     }
-  }
+  };
 
   bigPhotoCancel.addEventListener('click', onCrossClick);
   document.addEventListener('keydown', onDocumentEscKeydown);

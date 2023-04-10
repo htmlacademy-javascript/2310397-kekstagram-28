@@ -1,50 +1,76 @@
+import {isEscapeKey} from './util.js';
+
 const body = document.body;
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 
-const errorElement = errorTemplate.cloneNode(true);
-const successElement = successTemplate.cloneNode(true);
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
-
-const errorEscKeydown = (formClose) => (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    document.addEventListener('keydown', formClose);
-    errorElement.remove();
-  }
-};
-
-const addError = (formClose, onErrorEscKeydown) => {
-  document.removeEventListener('keydown', formClose);
-  document.addEventListener('keydown', onErrorEscKeydown, {once: true});
+const addError = (errorText, onCloseError) => {
+  const errorElement = errorTemplate.cloneNode(true);
+  const errorMessage = errorElement.querySelector('.error__title');
   const errorButton = errorElement.querySelector('.error__button');
-  errorButton.addEventListener('click', () => {
+  errorMessage.innerHTML = errorText;
+
+  let closeErrorPopup = () => {};
+
+  const onErrorEscKeydown = (evt) => {
+    if (isEscapeKey(evt)) {
+      evt.preventDefault();
+      closeErrorPopup();
+    }
+  };
+
+  closeErrorPopup = () => {
     errorElement.remove();
     document.removeEventListener('keydown', onErrorEscKeydown);
-    document.addEventListener('keydown', formClose);
-  }, {once: true});
+    onCloseError();
+  };
+
+  errorButton.addEventListener('click', () => {
+    closeErrorPopup();
+  });
+
+  errorElement.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('error__inner')) {
+      return;
+    }
+    closeErrorPopup();
+  });
+
+  document.addEventListener('keydown', onErrorEscKeydown);
   body.appendChild(errorElement);
 };
 
 
-const onSuccessEscKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    successElement.remove();
-    document.removeEventListener('keydown', onSuccessEscKeydown);
-  }
-};
-
 const addSuccess = () => {
-  document.addEventListener('keydown', onSuccessEscKeydown, {once: true});
+  const successElement = successTemplate.cloneNode(true);
   const successButton = successElement.querySelector('.success__button');
-  successButton.addEventListener('click', () => {
+
+  const closeSuccessPopup = () => {
     successElement.remove();
-    document.removeEventListener('keydown', onSuccessEscKeydown);
-  }, {once: true});
+  };
+
+  const onSuccessEscKeydown = (evt) => {
+    if (isEscapeKey(evt)) {
+      evt.preventDefault();
+      closeSuccessPopup();
+      document.removeEventListener('keydown', onSuccessEscKeydown);
+    }
+  };
+
+  successButton.addEventListener('click', () => {
+    closeSuccessPopup();
+  });
+
+  successElement.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('success__inner')) {
+      return;
+    }
+    closeSuccessPopup();
+  });
+
+  document.addEventListener('keydown', onSuccessEscKeydown);
   body.appendChild(successElement);
 };
 
-
-export {addError, errorEscKeydown, addSuccess};
+export {addError, addSuccess};
