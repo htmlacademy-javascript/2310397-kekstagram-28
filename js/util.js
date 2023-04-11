@@ -1,21 +1,6 @@
 // Модуль, в котором находятся вспомогательные функции.
 const ALERT_SHOW_TIME = 5000;
 
-const idGenerator = () => {
-  let lastIdValue = 0;
-
-  return () => {
-    lastIdValue += 1;
-    return lastIdValue;
-  };
-};
-
-const getRandomNumberGenerator = (min, max) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const showAlert = (message) => {
@@ -48,4 +33,4 @@ const debounce = (callback, timeoutDelay) => {
   };
 };
 
-export {idGenerator, getRandomNumberGenerator, isEscapeKey, showAlert, debounce};
+export {isEscapeKey, showAlert, debounce};
