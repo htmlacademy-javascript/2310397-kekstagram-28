@@ -3,6 +3,7 @@ import {addScaleActive, removeScaleActive} from './scale.js';
 import {addEffectActive, removeEffectActive} from './effects.js';
 import {sendData} from './api.js';
 import { addError, addSuccess } from './error-success.js';
+import './new-photo.js';
 
 
 const MAX_HASHTAG_COUNT = 5;
