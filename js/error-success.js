@@ -33,6 +33,8 @@ const addError = (errorText, onCloseError) => {
   errorElement.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('error__inner')) {
       return;
+    } else if (evt.target.classList.contains('error__title')) {
+      return;
     }
     closeErrorPopup();
   });
@@ -64,6 +66,8 @@ const addSuccess = () => {
 
   successElement.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('success__inner')) {
+      return;
+    } else if (evt.target.classList.contains('success__title')) {
       return;
     }
     closeSuccessPopup();

@@ -2,7 +2,7 @@ import { isEscapeKey } from './util.js';
 import { createComments } from './render-comments.js';
 
 const bigPhoto = document.querySelector('.big-picture');
-const bigPictureImage = bigPhoto.querySelector('.big-picture__img');
+const bigPhotoImage = bigPhoto.querySelector('.big-picture__img');
 const likesCount = bigPhoto.querySelector('.likes-count');
 const commentsCountShown = bigPhoto.querySelector('.social__comment-count');
 const photoDescription = bigPhoto.querySelector('.social__caption');
@@ -13,10 +13,10 @@ const bigPhotoCancel = bigPhoto.querySelector('.big-picture__cancel');
 const COMMENTS_PORTION_COUNT = 5;
 let currentCommentsShown = null;
 
-const checkCommentsLength = (photo) => {
-  if (currentCommentsShown >= photo.comments.length) {
+const checkCommentsLength = (photos) => {
+  if (currentCommentsShown >= photos.comments.length) {
     commentsLoader.classList.add('hidden');
-    currentCommentsShown = photo.comments.length;
+    currentCommentsShown = photos.comments.length;
   } else {
     commentsLoader.classList.remove('hidden');
   }
@@ -24,13 +24,13 @@ const checkCommentsLength = (photo) => {
 
 // Функция добавления данных большому фото
 const createBigPhotoDescription = (photo) => {
-  bigPictureImage.querySelector('img').src = photo.url;
+  bigPhotoImage.querySelector('img').src = photo.url;
   likesCount.textContent = photo.likes;
   photoDescription.textContent = photo.description;
 };
 
 
-const renderBigPicture = (photos) => {
+const renderBigPhoto = (photos) => {
   bigPhoto.classList.remove('hidden');
   createBigPhotoDescription(photos);
 
@@ -88,4 +88,4 @@ const renderBigPicture = (photos) => {
   document.addEventListener('keydown', onDocumentEscKeydown);
 };
 
-export {renderBigPicture};
+export {renderBigPhoto};
