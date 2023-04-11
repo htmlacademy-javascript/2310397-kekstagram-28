@@ -2,12 +2,14 @@ import { isEscapeKey, showAlert} from './util.js';
 import {addScaleActive, removeScaleActive} from './scale.js';
 import {addEffectActive, removeEffectActive} from './effects.js';
 import {sendData} from './api.js';
-import { addError, errorEscKeydown, addSuccess } from './error-success.js';
+import { addError, addSuccess } from './error-success.js';
 
 
 const MAX_HASHTAG_COUNT = 5;
 const HASHTAG_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
-const ERROR_TEXT = 'Ошибка заполнения #хэштэгов';
+const ERROR_HASHTAG_TEXT = 'Ошибка заполнения #хэштэгов';
+const ERROR_SEND_FORM_TEXT = 'Данные введены некорректно';
+
 
 const body = document.body;
 const form = document.querySelector('.img-upload__form');
@@ -24,23 +26,25 @@ const pristine = new Pristine(form, {
   errorTextClass: 'img-upload__field-wrapper__error',
 });
 
+let onFormEscKeydown = () => {};
+let onCrossClick = () => {};
 
-const onFocusTextFields = () => {
-  document.removeEventListener('keydown', onFormEscKeydown);
-};
-
-const onBlurTextFields = () => {
+const addFormEscKeydown = () => {
   document.addEventListener('keydown', onFormEscKeydown);
 };
 
+const removeFormEscKeydown = () => {
+  document.removeEventListener('keydown', onFormEscKeydown);
+};
+
 const addFocusAndBlur = (target) => {
-  target.addEventListener('focus', onFocusTextFields);
-  target.addEventListener('blur', onBlurTextFields);
+  target.addEventListener('focus', removeFormEscKeydown);
+  target.addEventListener('blur', addFormEscKeydown);
 };
 
 const removeFocusAndBlur = (target) => {
-  target.removeEventListener('focus', onFocusTextFields);
-  target.removeEventListener('blur', onBlurTextFields);
+  target.removeEventListener('focus', removeFormEscKeydown);
+  target.removeEventListener('blur', addFormEscKeydown);
 };
 
 
@@ -81,17 +85,17 @@ const onLoadFileFieldClick = () => {
 };
 
 
-function onFormEscKeydown(evt) {
+onFormEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     hideLoadFileField();
   }
-}
+};
 
-function onCrossClick(evt) {
+onCrossClick = (evt) => {
   evt.preventDefault();
   hideLoadFileField();
-}
+};
 
 // Валидация хэштэгов
 
@@ -112,7 +116,7 @@ const validateHashtags = (value) => {
 pristine.addValidator(
   hashTagField,
   validateHashtags,
-  ERROR_TEXT
+  ERROR_HASHTAG_TEXT
 );
 
 loadFileField.addEventListener('change', onLoadFileFieldClick);
@@ -134,7 +138,6 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
-const onErrorEscKeydown = errorEscKeydown(onFormEscKeydown);
 
 const setUserFormSubmit = (onSuccess) => {
   form.addEventListener('submit', (evt) => {
@@ -151,7 +154,8 @@ const setUserFormSubmit = (onSuccess) => {
         })
         .finally(unblockSubmitButton);
     } else {
-      addError(onFormEscKeydown, onErrorEscKeydown);
+      document.removeEventListener('keydown', onFormEscKeydown);
+      addError(ERROR_SEND_FORM_TEXT, addFormEscKeydown);
     }
   });
 };
