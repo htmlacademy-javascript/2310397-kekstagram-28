@@ -1,3 +1,5 @@
+import { getRandomNumberGenerator } from './util.js';
+
 const PICTURES_COUNT = 10;
 const FilterId = {
   DEFAULT: 'filter-default',
@@ -16,7 +18,6 @@ const shufflePhotos = (photosArray) => {
   while (lastPhotoElement !== 0) {
     lastPhotoElement--;
     const anotherPhotoElement = Math.floor(Math.random() * lastPhotoElement);
-
     const swap = photosArray[lastPhotoElement];
     photosArray[lastPhotoElement] = photosArray[anotherPhotoElement];
     photosArray[anotherPhotoElement] = swap;
@@ -25,17 +26,33 @@ const shufflePhotos = (photosArray) => {
 };
 
 
-function sortByComments(photoA, photoB) {
-  return photoB.comments.length - photoA.comments.length;
-}
+let tempPhotos = '';
+
+const getPhotosForRandomShuffling = (photosArray) => {
+  const tempFirstPhotoElement = getRandomNumberGenerator(0, photosArray.length);
+  tempPhotos = photosArray.slice(tempFirstPhotoElement, tempFirstPhotoElement + PICTURES_COUNT);
+
+  if (tempFirstPhotoElement > photosArray.length - PICTURES_COUNT) {
+    tempPhotos = photosArray.slice(tempFirstPhotoElement, photosArray.length);
+    const secondPartPhotos = photosArray.slice(0, PICTURES_COUNT - (photosArray.length - tempFirstPhotoElement));
+    Array.prototype.push.apply(tempPhotos, secondPartPhotos);
+    return shufflePhotos(tempPhotos);
+  }
+};
+
+
+const sortByComments = (photoA, photoB) => photoB.comments.length - photoA.comments.length;
 
 
 const getFilteredPhotos = () => {
-  const tempPhotos = photos.slice();
   if(currentFilter === FilterId.RANDOM) {
-    return shufflePhotos(tempPhotos).slice(0, PICTURES_COUNT);
+    if (photos.length <= PICTURES_COUNT) {
+      return shufflePhotos(photos.slice());
+    }
+    getPhotosForRandomShuffling(photos);
+    return shufflePhotos(tempPhotos);
   } else if (currentFilter === FilterId.DISCUSSED) {
-    return tempPhotos.sort(sortByComments);
+    return photos.slice().sort(sortByComments);
   } else {
     return photos;
   }
