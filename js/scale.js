@@ -17,7 +17,7 @@ const scaleImagePreview = (value) => {
 const onSmallerButtonClick = () => {
   const currentScaleValue = parseInt(scaleValue.value, 10);
   let newScaleValue = currentScaleValue - SCALE_STEP;
-  newScaleValue = (newScaleValue < MIN_SCALE) ? newScaleValue = MIN_SCALE : newScaleValue;
+  newScaleValue = (newScaleValue < MIN_SCALE) ? MIN_SCALE : newScaleValue;
 
   scaleImagePreview(newScaleValue);
 };
@@ -25,7 +25,7 @@ const onSmallerButtonClick = () => {
 const onBiggerButtonClick = () => {
   const currentScaleValue = parseInt(scaleValue.value, 10);
   let newScaleValue = currentScaleValue + SCALE_STEP;
-  newScaleValue = (newScaleValue > MAX_SCALE) ? newScaleValue = MAX_SCALE : newScaleValue;
+  newScaleValue = (newScaleValue > MAX_SCALE) ? MAX_SCALE : newScaleValue;
 
   scaleImagePreview(newScaleValue);
 };
