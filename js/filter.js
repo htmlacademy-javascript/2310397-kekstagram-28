@@ -10,7 +10,20 @@ const filterElement = document.querySelector('.img-filters');
 let currentFilter = FilterId.DEFAULT;
 let photos;
 
-const sortRandomly = () => Math.random() - 0.5;
+
+const shufflePhotos = (photosArray) => {
+  let lastPhotoElement = photosArray.length;
+  while (lastPhotoElement !== 0) {
+    lastPhotoElement--;
+    const anotherPhotoElement = Math.floor(Math.random() * lastPhotoElement);
+
+    const swap = photosArray[lastPhotoElement];
+    photosArray[lastPhotoElement] = photosArray[anotherPhotoElement];
+    photosArray[anotherPhotoElement] = swap;
+  }
+  return photosArray;
+};
+
 
 function sortByComments(photoA, photoB) {
   return photoB.comments.length - photoA.comments.length;
@@ -18,10 +31,11 @@ function sortByComments(photoA, photoB) {
 
 
 const getFilteredPhotos = () => {
+  const tempPhotos = photos.slice();
   if(currentFilter === FilterId.RANDOM) {
-    return photos.slice().sort(sortRandomly).slice(0, PICTURES_COUNT);
+    return shufflePhotos(tempPhotos).slice(0, PICTURES_COUNT);
   } else if (currentFilter === FilterId.DISCUSSED) {
-    return photos.slice().sort(sortByComments);
+    return tempPhotos.sort(sortByComments);
   } else {
     return photos;
   }
