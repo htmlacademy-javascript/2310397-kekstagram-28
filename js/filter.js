@@ -12,21 +12,25 @@ let photos;
 
 
 const shuffleAndCutPhotosCount = (photosArray) => {
-  const newPhotosArray = [];
+  const shuffledPhotosArray = [];
   let lastPhotoElement = photosArray.length;
+
+  const getShuffledPhotosArray = () => {
+    const anotherPhotoElement = Math.floor(Math.random() * lastPhotoElement--);
+    shuffledPhotosArray.push(photosArray.splice(anotherPhotoElement, 1) [0]);
+  };
+
   if (photosArray.length > PICTURES_COUNT) {
     const newPhotosArrayLength = photosArray.length - PICTURES_COUNT;
     while (lastPhotoElement !== newPhotosArrayLength) {
-      const anotherPhotoElement = Math.floor(Math.random() * lastPhotoElement--);
-      newPhotosArray.push(photosArray.splice(anotherPhotoElement, 1) [0]);
+      getShuffledPhotosArray();
     }
   } else {
     while (lastPhotoElement !== 0) {
-      const anotherPhotoElement = Math.floor(Math.random() * lastPhotoElement--);
-      newPhotosArray.push(photosArray.splice(anotherPhotoElement, 1) [0]);
+      getShuffledPhotosArray();
     }
   }
-  return newPhotosArray;
+  return shuffledPhotosArray;
 };
 
 
