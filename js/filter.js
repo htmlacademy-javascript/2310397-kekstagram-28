@@ -11,26 +11,17 @@ let currentFilter = FilterId.DEFAULT;
 let photos;
 
 
-const shuffleAndCutPhotosCount = (photosArray) => {
-  const shuffledPhotosArray = [];
-  let lastPhotoElement = photosArray.length;
-
-  const getShuffledPhotosArray = () => {
-    const anotherPhotoElement = Math.floor(Math.random() * lastPhotoElement--);
-    shuffledPhotosArray.push(photosArray.splice(anotherPhotoElement, 1) [0]);
-  };
-
-  if (photosArray.length > PICTURES_COUNT) {
-    const newPhotosArrayLength = photosArray.length - PICTURES_COUNT;
-    while (lastPhotoElement !== newPhotosArrayLength) {
-      getShuffledPhotosArray();
-    }
-  } else {
-    while (lastPhotoElement !== 0) {
-      getShuffledPhotosArray();
-    }
+const shufflePhotosAndCutPhotosCount = (pictures) => {
+  const shuffledPhotos = pictures.slice();
+  const shuffledPhotosLength = shuffledPhotos.length;
+  for (let i = 0; i < shuffledPhotosLength && i < PICTURES_COUNT; i++) {
+    const randomPhotoIndex = Math.floor(Math.random() * (shuffledPhotosLength - i) + i);
+    const tempPhoto = shuffledPhotos[randomPhotoIndex];
+    shuffledPhotos[randomPhotoIndex] = shuffledPhotos[i];
+    shuffledPhotos[i] = tempPhoto;
   }
-  return shuffledPhotosArray;
+
+  return shuffledPhotos.slice(0, PICTURES_COUNT);
 };
 
 
@@ -39,7 +30,7 @@ const sortByComments = (photoA, photoB) => photoB.comments.length - photoA.comme
 
 const getFilteredPhotos = () => {
   if(currentFilter === FilterId.RANDOM) {
-    return shuffleAndCutPhotosCount(photos.slice());
+    return shufflePhotosAndCutPhotosCount(photos);
   } else if (currentFilter === FilterId.DISCUSSED) {
     return photos.slice().sort(sortByComments);
   } else {
