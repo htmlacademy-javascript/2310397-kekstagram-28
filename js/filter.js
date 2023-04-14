@@ -33,9 +33,8 @@ const getFilteredPhotos = () => {
     return shufflePhotosAndCutPhotosCount(photos);
   } else if (currentFilter === FilterId.DISCUSSED) {
     return photos.slice().sort(sortByComments);
-  } else {
-    return photos;
   }
+  return photos;
 };
 
 
