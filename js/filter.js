@@ -1,5 +1,3 @@
-import { getRandomNumberGenerator } from './util.js';
-
 const PICTURES_COUNT = 10;
 const FilterId = {
   DEFAULT: 'filter-default',
@@ -13,31 +11,22 @@ let currentFilter = FilterId.DEFAULT;
 let photos;
 
 
-const shufflePhotos = (photosArray) => {
+const shuffleAndCutPhotosCount = (photosArray) => {
+  const newPhotosArray = [];
   let lastPhotoElement = photosArray.length;
-  while (lastPhotoElement !== 0) {
-    lastPhotoElement--;
-    const anotherPhotoElement = Math.floor(Math.random() * lastPhotoElement);
-    const swap = photosArray[lastPhotoElement];
-    photosArray[lastPhotoElement] = photosArray[anotherPhotoElement];
-    photosArray[anotherPhotoElement] = swap;
-  }
-  return photosArray;
-};
-
-
-let tempPhotos = [];
-
-const getPhotosForRandomShuffling = (photosArray) => {
-  const tempFirstPhotoElement = getRandomNumberGenerator(0, photosArray.length);
-
-  if (tempFirstPhotoElement > photosArray.length - PICTURES_COUNT) {
-    tempPhotos = photosArray.slice(tempFirstPhotoElement, photosArray.length);
-    const secondPartPhotos = photosArray.slice(0, PICTURES_COUNT - (photosArray.length - tempFirstPhotoElement));
-    Array.prototype.push.apply(tempPhotos, secondPartPhotos);
+  if (photosArray.length > PICTURES_COUNT) {
+    const newPhotosArrayLength = photosArray.length - PICTURES_COUNT;
+    while (lastPhotoElement !== newPhotosArrayLength) {
+      const anotherPhotoElement = Math.floor(Math.random() * lastPhotoElement--);
+      newPhotosArray.push(photosArray.splice(anotherPhotoElement, 1) [0]);
+    }
   } else {
-    tempPhotos = photosArray.slice(tempFirstPhotoElement, tempFirstPhotoElement + PICTURES_COUNT);
+    while (lastPhotoElement !== 0) {
+      const anotherPhotoElement = Math.floor(Math.random() * lastPhotoElement--);
+      newPhotosArray.push(photosArray.splice(anotherPhotoElement, 1) [0]);
+    }
   }
+  return newPhotosArray;
 };
 
 
@@ -46,11 +35,7 @@ const sortByComments = (photoA, photoB) => photoB.comments.length - photoA.comme
 
 const getFilteredPhotos = () => {
   if(currentFilter === FilterId.RANDOM) {
-    if (photos.length <= PICTURES_COUNT) {
-      return shufflePhotos(photos.slice());
-    }
-    getPhotosForRandomShuffling(photos);
-    return shufflePhotos(tempPhotos);
+    return shuffleAndCutPhotosCount(photos.slice());
   } else if (currentFilter === FilterId.DISCUSSED) {
     return photos.slice().sort(sortByComments);
   } else {

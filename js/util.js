@@ -3,12 +3,6 @@ const ALERT_SHOW_TIME = 5000;
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-const getRandomNumberGenerator = (min, max) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = '100';
@@ -39,4 +33,4 @@ const debounce = (callback, timeoutDelay) => {
   };
 };
 
-export {isEscapeKey, showAlert, debounce, getRandomNumberGenerator};
+export {isEscapeKey, showAlert, debounce};
