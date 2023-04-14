@@ -26,17 +26,17 @@ const shufflePhotos = (photosArray) => {
 };
 
 
-let tempPhotos = '';
+let tempPhotos = [];
 
 const getPhotosForRandomShuffling = (photosArray) => {
   const tempFirstPhotoElement = getRandomNumberGenerator(0, photosArray.length);
-  tempPhotos = photosArray.slice(tempFirstPhotoElement, tempFirstPhotoElement + PICTURES_COUNT);
 
   if (tempFirstPhotoElement > photosArray.length - PICTURES_COUNT) {
     tempPhotos = photosArray.slice(tempFirstPhotoElement, photosArray.length);
     const secondPartPhotos = photosArray.slice(0, PICTURES_COUNT - (photosArray.length - tempFirstPhotoElement));
     Array.prototype.push.apply(tempPhotos, secondPartPhotos);
-    return shufflePhotos(tempPhotos);
+  } else {
+    tempPhotos = photosArray.slice(tempFirstPhotoElement, tempFirstPhotoElement + PICTURES_COUNT);
   }
 };
 
