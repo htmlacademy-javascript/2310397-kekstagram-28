@@ -1,6 +1,8 @@
 import { isEscapeKey } from './util.js';
 import { createComments } from './render-comments.js';
 
+const COMMENTS_PORTION_COUNT = 5;
+
 const bigPhoto = document.querySelector('.big-picture');
 const bigPhotoImage = bigPhoto.querySelector('.big-picture__img');
 const likesCount = bigPhoto.querySelector('.likes-count');
@@ -10,7 +12,6 @@ const commentsLoader = bigPhoto.querySelector('.comments-loader');
 const bigPhotoCancel = bigPhoto.querySelector('.big-picture__cancel');
 
 
-const COMMENTS_PORTION_COUNT = 5;
 let currentCommentsShown = null;
 
 const checkCommentsLength = (photos) => {
@@ -34,7 +35,7 @@ const renderBigPhoto = (photos) => {
   bigPhoto.classList.remove('hidden');
   createBigPhotoDescription(photos);
 
-  document.querySelector('body').classList.add('modal-open');
+  document.body.classList.add('modal-open');
 
   // Блок отрисовки комментариев
   // Коллбэк для обработчика клика для отрисовки дополнительных комментариев

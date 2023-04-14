@@ -10,21 +10,31 @@ const filterElement = document.querySelector('.img-filters');
 let currentFilter = FilterId.DEFAULT;
 let photos;
 
-const sortRandomly = () => Math.random() - 0.5;
 
-function sortByComments(photoA, photoB) {
-  return photoB.comments.length - photoA.comments.length;
-}
+const shufflePhotosAndCutPhotosCount = (pictures) => {
+  const shuffledPhotos = pictures.slice();
+  const shuffledPhotosLength = shuffledPhotos.length;
+  for (let i = 0; i < shuffledPhotosLength && i < PICTURES_COUNT; i++) {
+    const randomPhotoIndex = Math.floor(Math.random() * (shuffledPhotosLength - i) + i);
+    const tempPhoto = shuffledPhotos[randomPhotoIndex];
+    shuffledPhotos[randomPhotoIndex] = shuffledPhotos[i];
+    shuffledPhotos[i] = tempPhoto;
+  }
+
+  return shuffledPhotos.slice(0, PICTURES_COUNT);
+};
+
+
+const sortByComments = (photoA, photoB) => photoB.comments.length - photoA.comments.length;
 
 
 const getFilteredPhotos = () => {
   if(currentFilter === FilterId.RANDOM) {
-    return photos.slice().sort(sortRandomly).slice(0, PICTURES_COUNT);
+    return shufflePhotosAndCutPhotosCount(photos);
   } else if (currentFilter === FilterId.DISCUSSED) {
     return photos.slice().sort(sortByComments);
-  } else {
-    return photos;
   }
+  return photos;
 };
 
 

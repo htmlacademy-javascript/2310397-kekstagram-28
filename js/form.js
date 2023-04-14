@@ -11,6 +11,10 @@ const HASHTAG_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const ERROR_HASHTAG_TEXT = 'Ошибка заполнения #хэштэгов';
 const ERROR_SEND_FORM_TEXT = 'Данные введены некорректно';
 
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Пубилкую...'
+};
 
 const body = document.body;
 const form = document.querySelector('.img-upload__form');
@@ -124,10 +128,6 @@ loadFileField.addEventListener('change', onLoadFileFieldClick);
 
 
 // Отправка формы на сервер
-const SubmitButtonText = {
-  IDLE: 'Опубликовать',
-  SENDING: 'Пубилкую...'
-};
 
 const blockSubmitButton = () => {
   submitButton.disabled = true;
