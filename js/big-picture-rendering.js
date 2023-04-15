@@ -67,7 +67,7 @@ const renderBigPhoto = (photos) => {
 
   const closeBigPhoto = () => {
     bigPhoto.classList.add('hidden');
-    document.querySelector('body').classList.remove('modal-open');
+    document.body.classList.remove('modal-open');
     bigPhotoCancel.removeEventListener('click', onCrossClick);
     document.removeEventListener('keydown', onDocumentEscKeydown);
     commentsLoader.removeEventListener('click', onCommentsLouderButtonClick);
